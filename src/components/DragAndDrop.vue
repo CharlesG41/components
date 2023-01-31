@@ -3,29 +3,47 @@
         <div 
             class="drop-zone" 
             @drop="onDrop($event, 1)"
+            @dragover.prevent
+            @dragenter.prevent
         >
             <div 
-                class="drag-el" 
+                class="flex" 
                 v-for="item in listOne" 
-                :key="item.title" 
-                draggable 
-                @dragstart="startDrag($event, item)"
+                :key="item.title"
             >
-                {{ item.title }}
+                <div
+                    class="px-4 py-2 bg-gray-100 cursor-move"
+                    draggable="true"
+                    @dragstart="startDrag($event, item)"
+                >
+                    {{ item.id }}
+                </div>
+                <div class="w-full bg-white py-2">
+                    {{ item.title }}
+                </div>
             </div>
         </div>
         <div 
-            class="drop-zone" 
+            class="drop-zone"
             @drop="onDrop($event, 2)"
+            @dragover.prevent
+            @dragenter.prevent
         >
             <div 
-                class="drag-el" 
+                class="flex" 
                 v-for="item in listTwo" 
-                :key="item.title" 
-                draggable 
-                @dragstart="startDrag($event, item)"
+                :key="item.title"
             >
-                {{ item.title }}
+                <div
+                    class="px-4 py-2 bg-gray-100 cursor-move"
+                    draggable="true"
+                    @dragstart="startDrag($event, item)"
+                >
+                    {{ item.id }}
+                </div>
+                <div class="w-full bg-white py-2">
+                    {{ item.title }}
+                </div>
             </div>
         </div>
     </div>
@@ -62,6 +80,7 @@ export default {
             evt.dataTransfer.setData('itemID', item.id)
         },
         onDrop(evt, list) {
+            console.log('onDrop')
             const itemID = evt.dataTransfer.getData('itemID')
             const item = this.items.find((item) => item.id == itemID)
             item.list = list
